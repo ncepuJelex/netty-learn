@@ -2,6 +2,7 @@ package com.jel.tech.chat.window;
 
 import com.jel.tech.chat.client.common.WindowRef;
 import com.jel.tech.chat.protocol.request.LoginRequestPacket;
+import com.jel.tech.chat.session.Attributes;
 import io.netty.channel.Channel;
 
 import java.awt.event.KeyEvent;
@@ -137,7 +138,7 @@ public class LoginFrame extends javax.swing.JFrame {
         ChatWindow chatWindow = new ChatWindow(channel);
         //  成功登录后才显示
         chatWindow.setVisible(false);
-        WindowRef.set(new WindowRef(chatWindow));
+        channel.attr(Attributes.CHAT_WINDOW_ATTRIBUTE_KEY).set(chatWindow);
 
         channel.writeAndFlush(loginRequestPacket).syncUninterruptibly();
         loginRequestPacket.setPassword(null);

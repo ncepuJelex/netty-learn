@@ -5,7 +5,9 @@ import com.jel.tech.chat.window.ChatWindow;
 /**
  * @author jelex.xu
  * @create 2020-01-01 16:59
+ * @description 弃用原因同 LoginFrameRef 类中说明
  **/
+@Deprecated
 public class WindowRef {
 
     private static WindowRef ref0;

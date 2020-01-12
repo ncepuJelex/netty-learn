@@ -5,7 +5,9 @@ import com.jel.tech.chat.window.LoginFrame;
 /**
  * @author jelex.xu
  * @create 2020-01-01 20:28
+ * @description 通过channel.attr(...) => get/set 替换此类功能
  **/
+@Deprecated
 public class LoginFrameRef {
 
     private static LoginFrameRef ref0;

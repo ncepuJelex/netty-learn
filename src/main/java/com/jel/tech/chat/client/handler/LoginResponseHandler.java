@@ -2,6 +2,7 @@ package com.jel.tech.chat.client.handler;
 
 import com.jel.tech.chat.client.common.LoginFrameRef;
 import com.jel.tech.chat.protocol.response.LoginResponsePacket;
+import com.jel.tech.chat.session.Attributes;
 import com.jel.tech.chat.session.Session;
 import com.jel.tech.chat.util.SessionUtil;
 import io.netty.channel.ChannelHandlerContext;
@@ -18,11 +19,8 @@ public class LoginResponseHandler extends SimpleChannelInboundHandler<LoginRespo
             System.out.println("[" + userName + "]登录成功，userId 为: " + loginResponsePacket.getUserId());
             SessionUtil.bindSession(new Session(userId, userName), ctx.channel());
 
-            // 隐藏登录界面
-            LoginFrameRef.get().setVisible(false);
-//            // 启动聊天窗口
-//            ChatWindow chatWindow = new ChatWindow(ctx.channel());
-//            WindowRef.set(new WindowRef(chatWindow));
+            // 释放 登录界面 资源
+            ctx.channel().attr(Attributes.LOGIN_FRAME_ATTRIBUTE_KEY).get().dispose();
         } else {
             System.out.println("[" + userName + "]登录失败，原因：" + loginResponsePacket.getReason());
         }

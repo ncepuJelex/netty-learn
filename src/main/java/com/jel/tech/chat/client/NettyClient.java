@@ -1,11 +1,11 @@
 package com.jel.tech.chat.client;
 
-import com.jel.tech.chat.client.common.LoginFrameRef;
 import com.jel.tech.chat.client.handler.*;
 import com.jel.tech.chat.codec.PacketDecoder;
 import com.jel.tech.chat.codec.PacketEncoder;
 import com.jel.tech.chat.codec.Spliter;
 import com.jel.tech.chat.heartbeat.IMIdleStateHandler;
+import com.jel.tech.chat.session.Attributes;
 import com.jel.tech.chat.window.ChatWindow;
 import com.jel.tech.chat.window.LoginFrame;
 import io.netty.bootstrap.Bootstrap;
@@ -50,7 +50,7 @@ public class NettyClient {
                         // 登录响应处理器
                         ch.pipeline().addLast(new LoginResponseHandler());
                         // 刷新好友列表
-                        ch.pipeline().addLast(new RefreshConcactsResponseHandler());
+                        ch.pipeline().addLast(new RefreshContactsResponseHandler());
                         // 所有人聊 响应 处理器
                         ch.pipeline().addLast(new MsgToAllResponseHandler());
                         // 收消息处理器
@@ -88,14 +88,7 @@ public class NettyClient {
 
                 loginFrame.setVisible(true);
 
-                LoginFrameRef.set(new LoginFrameRef(loginFrame));
-
-//                System.out.print("请输入用户名：");
-//                Scanner scanner = new Scanner(System.in);
-
-//                LoginRequestPacket loginRequestPacket = new LoginRequestPacket();
-//                loginRequestPacket.setUserName(scanner.nextLine());
-//                loginRequestPacket.setPassword("pwd");
+                channel.attr(Attributes.LOGIN_FRAME_ATTRIBUTE_KEY).set(loginFrame);
 
                 // 因为许多 处理器都需要 此ChatWindow, 所以放在公共中
 //                ChatWindow chatWindow = new ChatWindow(channel);

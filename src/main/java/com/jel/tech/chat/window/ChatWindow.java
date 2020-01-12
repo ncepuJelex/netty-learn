@@ -97,7 +97,7 @@ public class ChatWindow extends JFrame {
             public void windowClosing(WindowEvent e) {
                 System.out.println("走之前先关闭channel....");
                 LogoutRequestPacket logoutRequestPacket = new LogoutRequestPacket();
-                channel.writeAndFlush(logoutRequestPacket);
+                channel.writeAndFlush(logoutRequestPacket).syncUninterruptibly();
             }
         });
 
